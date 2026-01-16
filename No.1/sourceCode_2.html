@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教育情報学研究室(1)</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/tab.css">
+    
+    <style>
+      .body{
+        margin:0;
+        background:#eaffff;
+        font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+        color:#111;
+      }
+      
+      .menu-like-card{
+        max-width:1600px;
+        width:98vw;
+        margin:24px auto;
+        padding:28px 32px;
+        background:#f8f8f8;
+        border:1px solid #ccc;
+        border-radius:18px;
+        box-sizing:border-box;
+      }
+      
+      .top-guide{
+        text-align:center;
+        font-weight:700;
+        margin-bottom:22px;
+      }
+      
+      .tab-buttons{
+        display:flex;
+        justify-content:center;
+        gap:22px;
+        margin-bottom:26px;
+      }
+      
+      .tab-buttons button{
+        width: 100px;
+        height: 45px;
+        border: 2px solid #888;
+        background: #ffffff;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 800;
+        font-size: 20px;
+        transition: background 0.15s ease, border-color 0.15s ease, width 0.15s ease;
+      }
+      
+      .tab-buttons button.active{
+        background: #ffeb3b;
+        border-color: #fbc02d;
+        color:#000;
+        width: 220px;
+      }
+      
+      .tab-buttons button:hover{
+        background:#eaeaea;
+      }
+      
+      .tab-buttons button.active:hover{
+        background:#ffe55c;
+      }
+      
+      .tab-content{ display:none; }
+      .tab-content.active{ display:block; }
+      
+      .cat-title{
+        font-size:38px;
+        font-weight:900;
+        margin-bottom:24px;
+      }
+      
+      .cat-row{
+        display:flex;
+        gap:22px;
+        align-items:flex-start;
+      }
+      
+      .cat-photo{
+        width:560px;
+        max-width:100%;
+        height:auto;
+        display:block;
+      }
+      
+      .cat-text{
+        flex:1;
+      }
+      
+      .cat-text p{
+        margin:0 0 22px;
+        font-size:17px;
+        line-height:2.0;
+        font-weight:600;
+        letter-spacing:0.03em;
+      }
+      
+      .code-block{
+        background:#1e1e1e;
+        color:#d4d4d4;
+        border-radius:10px;
+        padding:16px;
+        border:1px solid #444;
+        font:14px/1.7 Consolas, "Courier New", monospace;
+        white-space:pre;
+        overflow:auto;
+      }
+      
+      .hl-tag{ color:#569cd6; }
+      .hl-attr{ color:#9cdcfe; }
+      .hl-str{ color:#ce9178; }
+      .hl-com{ color:#6a9955; }
+      
+      .next{
+        text-align:center;
+        margin-top:32px;
+      }
+      
+      .next a{
+        display:inline-block;
+        padding:10px 20px;
+        background:#007bff;
+        color:#fff;
+        text-decoration:none;
+        border-radius:8px;
+        font-weight:700;
+        margin:0 6px;
+      }
+      
+      .next a:hover{ background:#0056b3; }
+      
+      @media (max-width:1200px){
+        .cat-row{ flex-direction:column; }
+        .cat-photo{ width:100%; }
+      }
+    </style>
+</head>
+
+<body>
+  <div class="menu-like-card">
+    <div class="top-guide">
+      このページには html にしか表示されない情報があります。探してください。
+    </div>
+
+    <div class="tab-buttons">
+      <button id="btn1" class="active" onclick="openTab('tab1')">ページ</button>
+      <button id="btn2" onclick="openTab('tab2')">html</button>
+    </div>
+
+    <div id="tab1" class="tab-content active">
+      <div class="cat-title">猫の癒し</div>
+
+      <div class="cat-row">
+        <img src="../picture/cat.jpg" alt="猫" class="cat-photo" />
+
+        <div class="cat-text">
+          <p>世の中にはたくさんの可愛い猫がいる。</p>
+          <p>猫というものは心にすごく癒しを与えてくれる。</p>
+          <p>そのまなざしに見つめられると、こっちの悩みなんてちっぽけに思えてくる。</p>
+          <p>気まぐれで、自由気ままで、でもふとしたときにすり寄ってくる――その絶妙な距離感がたまらない。</p>
+          <p>疲れた日、何もしたくない朝、そっと隣にいてくれるだけで、救われるような気がするんだ。</p>
+          <p>猫は言葉なんて話さない。でも、その静けさの中に、人間が忘れかけていた「やすらぎ」がある。</p>
+          <p>こちらの感情に無理に寄り添うこともなく、ただいつものように丸まって、静かに眠る姿。</p>
+          <p>それだけで、あぁ、この世界もまだ捨てたもんじゃないな、って思えるんだ。</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="tab2" class="tab-content">
+      <div class="cat-title">Cat.html</div>
+
+      <pre class="code-block">
+            <code>
+                <span class="tok-tag">!DOCTYPE <span class="tok-key">html</span></span>
+                <span class="tok-tag">html <span class="tok-key">lang</span><span class="tok">=</span><span class="tok-str">"ja"</span></span>
+                <span class="tok-tag">head</span>
+                    <span class="tok-tag">meta <span class="tok-attr">charset</span><span class="tok">=</span><span class="tok-str">"UTF-8"</span></span>
+                    <span class="tok-tag">meta <span class="tok-key">http-equiv</span><span class="tok">=</span><span class="tok-str">"X-UA-Compatible" </span><span class="tok-key">content</span><span class="tok">=</span><span class="tok-str">"IE=edge"</span></span>
+                    <span class="tok-tag">meta <span class="tok-key">name</span><span class="tok">=</span><span class="tok-str">"viewport" </span><span class="tok-key">content</span><span class="tok">=</span><span class="tok-str">"width=device-width,  initial-scale=1.0"</span></span>
+                    <span class="tok-tag">title</span><span class="tok">猫のページ</span><span class="tok-tag">/title</span>
+                    <span class="tok-tag">link <span class="tok-key">rel</span><span class="tok">=</span><span class="tok-str">"stylesheet" </span><span class="tok-key">href</span><span class="tok">=</span><span class="tok-str">"../css/style.css"</span></span>
+                <span class="tok-tag">/head</span>
+                
+                <span class="tok-tag">body</span>
+                    <span class="tok-tag">div <span class="tok-key">class</span><span class="tok">=</span><span class="tok-str">"textOfFree"</span></span>
+                        <span class="tok-tag">p</span><span class="tok">猫の癒し</span><span class="tok-tag">/p</span>
+                    <span class="tok-tag">/div</span>
+                
+                    <span class="tok-tag">div <span class="tok-key">class</span><span class="tok">=</span><span class="tok-str">"textOfCat"</span></span>
+                        <span class="tok-tag">p</span><span class="tok-tag">img <span class="tok-key">src</span><span class="tok">=</span><span class="tok-str">"../picture/cat.jpg" </span><span class="tok-key">width</span><span class="tok">=</span><span class="tok-str">"600" </span><span class="tok-key">height</span><span class="tok">=</span><span class="tok-str">"400" </span><span class="tok-ali">align</span><span class="tok">=</span><span class="tok-str">"left" </span><span class="tok-key">style</span><span class="tok">=</span><span class="tok-str">"margin-right:10px;" </span></span><span class="tok-tag">p</span>
+                        <span class="tok-tag">p</span><span class="tok">世の中にはたくさんの可愛い猫がいる。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">p</span><span class="tok">猫というものは心にすごく癒しを与えてくれる。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">p</span><span class="tok">そのまなざしに見つめられると、こっちの悩みなんてちっぽけに思えてくる。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">p</span><span class="tok">気まぐれで、自由気ままで、でもふとしたときにすり寄ってくる――その絶妙な距離感がたまらない。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">p</span><span class="tok">疲れた日、何もしたくない朝、そっと隣にいてくれるだけで、救われるような気がするんだ。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">p</span><span class="tok">猫は言葉なんて話さない。でも、その静けさの中に、人間が忘れかけていた「やすらぎ」がある。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">p</span><span class="tok">こちらの感情に無理に寄り添うこともなく、ただいつものように丸まって、静かに眠る姿。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">p</span><span class="tok">それだけで、あぁ、この世界もまだ捨てたもんじゃないな、って思えるんだ。</span><span class="tok-tag">/p</span>
+                        <span class="tok-tag">br <span class="tok-key">clear</span><span class="tok">=</span><span class="tok-str">"all"</span></span>
+                    <span class="tok-tag">/div</span>
+                    
+                    <span class="tok-tag">div <span class="tok-attr">class</span><span class="tok">=</span><span class="tok-str">"key"</span></span>
+                        <span class="tok-tag">p</span><span class="tok">Key:<span class="tok"><span id="a1"></span></span></span><span class="tok-tag">/p</span>
+                    <span class="tok-tag">/div</span>
+                <span class="tok-tag">/body</span>
+                <span class="tok-tag">/html</span>
+            </code>
+        </pre>
+    </div>
+  </div>
+
+  <div class="next">
+    <a href="sourceCode_1.html">戻る</a>
+    <a href="sourceCode_3.html">次へ</a>
+  </div>
+
+  <script>
+    const correct1 = localStorage.getItem("a1") || "xxx"; 
+    document.getElementById("a1").textContent = correct1;
+  </script>
+
+  <script>
+    function openTab(id){
+      document.getElementById("tab1").classList.remove("active");
+      document.getElementById("tab2").classList.remove("active");
+      document.getElementById("btn1").classList.remove("active");
+      document.getElementById("btn2").classList.remove("active");
+
+      document.getElementById(id).classList.add("active");
+      (id === "tab1" ? btn1 : btn2).classList.add("active");
+    }
+  </script>
+</body>
+</html>
