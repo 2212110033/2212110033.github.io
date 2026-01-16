@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クイズ編集メニュー</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .qr-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .qr-box {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      background: #f8f8f8;
+      text-align: center;
+      width: 260px;
+    }
+
+    .qr-placeholder {
+      width: 200px;
+      height: 200px;
+      border: 2px dashed #aaa;
+      margin: 0 auto;
+      border-radius: 10px;
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .qr-url {
+      font-size: 12px;
+      margin-top: 10px;
+      word-break: break-all;
+    }
+
+    .edit-btn {
+      margin-top: 15px;
+    }
+
+    .next a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 5px;
+    }
+    .next a:hover {
+      background: #0056b3;
+    }
+
+    .save-btn-wrapper {
+      margin-top: 10px;
+      text-align: center;      
+    }
+
+    .save-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .qr-box .save-btn-wrapper {
+      text-align: center !important;
+    }
+    
+    .qr-box .save-btn {
+      display: inline-block !important;
+      margin: 10px auto 0 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="learning-page">
+    <div class="text">
+      <h2>クイズ編集メニュー</h2>
+      <p>ここのページはクイズの編集ページになっております。</p>
+
+      <div class="qr-row">
+
+        <!-- 第1問 -->
+        <div class="qr-box">
+          <h3>第1問</h3>
+
+          <div class="qr-placeholder" id="qr1">
+            QRコード貼付位置
+          </div>
+
+          <p class="qr-url">information.html</p>
+
+          <div class="next edit-btn">
+            <a href="edit_q1.html">第1問を編集</a>
+          </div>
+
+          <div class="save-btn-wrapper">
+            <button class="save-btn" onclick="saveQR('qr1', 'q1_information_qr.png')">
+              QRコードを保存
+            </button>
+          </div>
+        </div>
+
+        <!-- 第2問 -->
+        <div class="qr-box">
+          <h3>第2問</h3>
+
+          <div class="qr-placeholder" id="qr2">
+            QRコード貼付位置
+          </div>
+
+          <p class="qr-url">caesar_1.html</p>
+
+          <div class="next edit-btn">
+            <a href="edit_q2.html">第2問を編集</a>
+          </div>
+
+          <div class="save-btn-wrapper">
+            <button class="save-btn" onclick="saveQR('qr2', 'q2_caesar_qr.png')">
+              QRコードを保存
+            </button>
+          </div>
+        </div>
+
+        <!-- 第3問 -->
+        <div class="qr-box">
+          <h3>第3問</h3>
+
+          <div class="qr-placeholder" id="qr3">
+            QRコード貼付位置
+          </div>
+
+          <p class="qr-url">location_1.html</p>
+
+          <div class="next edit-btn">
+            <a href="edit_q3.html">第3問を編集</a>
+          </div>
+
+          <div class="save-btn-wrapper">
+            <button class="save-btn" onclick="saveQR('qr3', 'q3_location_qr.png')">
+              QRコードを保存
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function saveQR(divId, filename) {
+      const target = document.getElementById(divId);
+
+      html2canvas(target).then(canvas => {
+        const a = document.createElement("a");
+        a.href = canvas.toDataURL("image/png");
+        a.download = filename;
+        a.click();
+      });
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+</html>
