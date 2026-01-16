@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Exif Terminal</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #000;
+      color: #0f0;
+      font-family: "Courier New", monospace;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .terminal {
+      flex: 1;
+      border: 2px solid #0f0;
+      padding: 10px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #0f0;
+      margin-left: 2px;
+      animation: blink 0.8s step-start infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    #hiddenInput {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="terminal" id="terminal"></div>
+    <input type="text" id="hiddenInput" autocomplete="off">
+  </div>
+
+  <script>
+    const term  = document.getElementById("terminal");
+    const input = document.getElementById("hiddenInput");
+
+    const a3          = localStorage.getItem("a3");
+    const imgFileName = localStorage.getItem("quiz_image_name") || "quiz_image.jpg";
+
+    let imgType = localStorage.getItem("quiz_image_type") || "";
+    let imgSize = localStorage.getItem("quiz_image_size") || "";
+
+    if (!imgType || !imgSize) {
+      const imgData = localStorage.getItem("quiz_image");
+      if (imgData && imgData.startsWith("data:")) {
+        const m = imgData.match(/^data:(.*?);base64,(.*)$/);
+        if (m) {
+          const mime = m[1];
+          const base64 = m[2];
+
+          if (!imgType) {
+            imgType = mime;
+          }
+          if (!imgSize) {
+            const len = base64.length;
+            let padding = 0;
+            if (base64.endsWith("==")) padding = 2;
+            else if (base64.endsWith("=")) padding = 1;
+            const sizeBytes = Math.floor(len * 3 / 4) - padding;
+            imgSize = String(sizeBytes);
+          }
+        }
+      }
+    }
+
+    if (!imgType) imgType = "unknown";
+    if (!imgSize) imgSize = "unknown";
+
+    let currentCmdSpan = null;
+    let cursorSpan     = null;
+
+    function log(line = "") {
+      const div = document.createElement("div");
+      div.textContent = line;
+      term.appendChild(div);
+      term.scrollTop = term.scrollHeight;
+    }
+
+    function getNowStr() {
+      const now = new Date();
+      const pad = n => String(n).padStart(2, "0");
+      return (
+        now.getFullYear() + "-" +
+        pad(now.getMonth() + 1) + "-" +
+        pad(now.getDate()) + " " +
+        pad(now.getHours()) + ":" +
+        pad(now.getMinutes()) + ":" +
+        pad(now.getSeconds())
+      );
+    }
+
+    function showPrompt() {
+      const line = document.createElement("div");
+      const prompt = document.createElement("span");
+      prompt.textContent = "$ ";
+
+      currentCmdSpan = document.createElement("span");
+      currentCmdSpan.id = "currentCmd";
+
+      cursorSpan = document.createElement("span");
+      cursorSpan.className = "cursor";
+
+      line.appendChild(prompt);
+      line.appendChild(currentCmdSpan);
+      line.appendChild(cursorSpan);
+
+      term.appendChild(line);
+      term.scrollTop = term.scrollHeight;
+
+      input.value = "";
+      input.focus();
+    }
+
+    function runExif(cmd, argName) {
+      const targetName = argName || imgFileName;
+      const dateStr = getNowStr();
+
+      const lines = [
+        "----------------------------------------",
+        "File Name           : " + targetName,
+        "File Type           : " + imgType,
+        "File Size           : " + imgSize + " bytes",
+        "Modify Date         : " + dateStr,
+        "",
+        "Orientation         : Horizontal (normal)",
+        "",
+        "Location            : " + (a3 || "（第3問の答えがまだ設定されていません）"),
+        "",
+        "ExifTool Version    : 1.03",
+        "----------------------------------------"
+      ];
+
+      let i = 0;
+      function step() {
+        if (i < lines.length) {
+          log(lines[i]);
+          i++;
+          setTimeout(step, 200);
+        } else {
+          showPrompt();
+        }
+      }
+      step();
+    }
+
+    function handleCommand(raw) {
+      const cmd = raw.trim();
+      if (!cmd) {
+        showPrompt();
+        return;
+      }
+
+      if (cmd === "help") {
+        log("----------------------------------------");
+        log("使えるコマンド:");
+        log("  exif             - 画像のEXIF情報を表示");
+        log("  clear            - 画面をクリア");
+        log("  help             - このヘルプを表示");
+        log("----------------------------------------");
+        showPrompt();
+      } else if (cmd === "clear") {
+        term.textContent = "";
+        log("Fake ExifTool Terminal");
+        log("Type 'help' for available commands.\n");
+        showPrompt();
+      } else if (cmd === "exif") {
+        const parts = cmd.split(/\s+/);
+        const argName = parts[1];
+        runExif(cmd, argName);
+      } else {
+        log("command not found: " + cmd);
+        showPrompt();
+      }
+    }
+
+    log("Fake ExifTool Terminal");
+    log("Type 'help' for available commands.\n");
+    showPrompt();
+
+    input.addEventListener("input", () => {
+      if (currentCmdSpan) {
+        currentCmdSpan.textContent = input.value;
+        term.scrollTop = term.scrollHeight;
+      }
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const value = input.value;
+        if (cursorSpan) {
+          cursorSpan.remove();
+          cursorSpan = null;
+        }
+        handleCommand(value);
+      }
+    });
+
+    term.addEventListener("click", () => {
+      input.focus();
+    });
+  </script>
+</body>
+</html>
