@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教育情報学研究室(2)</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .menu-like-card{
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      background: #f8f8f8;
+      width: min(900px, 92vw);
+      margin: 30px auto 0;
+      box-sizing: border-box;
+    }
+
+    .next a, .next button{
+      display:inline-block;
+      padding:10px 20px;
+      background:#007bff;
+      color:#fff;
+      text-decoration:none;
+      border-radius:8px;
+      margin:5px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .next a:hover, .next button:hover{ background:#0056b3; }
+    .next{ text-align:center; margin-top:32px; }
+
+    .answer-input{
+      width: 400px !important;
+      font-size: 18px;
+    }
+    .answer-input:focus{
+      outline: none;
+      border-color: #3b82f6; 
+    }
+
+    .send-btn{
+      margin-top:10px;
+      padding:6px 14px;
+      font-size:16px;
+      font-weight:700;
+      border-radius:6px;
+      border:2px solid #888;
+      background:#f2f2f2;
+      cursor:pointer;
+    }
+
+    .send-btn:hover{
+      background:#e6e6e6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu-like-card">
+    <div class="learning-page">
+      <div class="answer">
+        <p>では、暗号を解読してみましょう。</p>
+        <p>答えを入力してください。</p>
+
+        <br>
+
+        <p id="a2"></p>
+
+        <br>
+
+        <div class="row">
+          <input id="decryptInput" type="text" placeholder="復号した答えを入力" class="answer-input">
+          <button id="check" class="send-btn">送信</button>
+        </div>
+
+        <p id="decryptResult"></p>
+      </div>
+
+      <script>
+        function caesarDecode(text, shift) {
+          return text.replace(/[a-z]/g, c => {
+            const code = c.charCodeAt(0) - 97;
+            const next = (code - shift + 26) % 26;
+            return String.fromCharCode(next + 97);
+          });
+        }
+
+        const encrypted = (localStorage.getItem("a2_encrypted") || "xxx").toLowerCase();
+        const shift = parseInt(localStorage.getItem("a2_shift") || "3", 10);
+        const dir = parseInt(localStorage.getItem("a2_direction") || "1", 10); // 1 or -1
+        const effectiveShift = shift * dir;
+
+        document.getElementById("a2").textContent =
+          `${encrypted} (CTF${dir === 1 ? "+" : "-"}${shift})`;
+
+        document.getElementById("check").addEventListener("click", function () {
+          const userAns = document.getElementById("decryptInput").value.trim().toLowerCase();
+          const result = document.getElementById("decryptResult");
+          result.style.color = "";
+
+          if (!userAns) {
+            result.textContent = "答えを入力してね。";
+            result.style.color = "black";
+            return;
+          }
+
+          const decoded = caesarDecode(encrypted, effectiveShift);
+
+          if (userAns === decoded) {
+            result.textContent = "正解！";
+            result.style.color = "green";
+          } else {
+            result.textContent = "不正解…";
+            result.style.color = "red";
+          }
+        });
+
+      </script>
+    </div>
+  </div>
+
+  <div class="next">
+    <a href="caesar_1.html">戻る</a>
+  </div>
+</body>
+</html>
