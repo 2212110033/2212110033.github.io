@@ -83,6 +83,12 @@
       display: inline-block !important;
       margin: 10px auto 0 !important;
     }
+
+    .qr-placeholder img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+    }
   </style>
 </head>
 
@@ -99,7 +105,7 @@
           <h3>第1問</h3>
 
           <div class="qr-placeholder" id="qr1">
-            QRコード貼付位置
+            <img src="./qr/q1_information_qr.png" alt="第1問QRコード">
           </div>
 
           <p class="qr-url">information.html</p>
@@ -120,7 +126,7 @@
           <h3>第2問</h3>
 
           <div class="qr-placeholder" id="qr2">
-            QRコード貼付位置
+            <img src="./qr/q2_caesar_1_qr.png" alt="第2問QRコード">
           </div>
 
           <p class="qr-url">caesar_1.html</p>
@@ -141,7 +147,7 @@
           <h3>第3問</h3>
 
           <div class="qr-placeholder" id="qr3">
-            QRコード貼付位置
+            <img src="./qr/q3_location_1_qr.png" alt="第3問QRコード">
           </div>
 
           <p class="qr-url">location_1.html</p>
@@ -175,6 +181,9 @@
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+</html>
 
 </body>
 </html>
