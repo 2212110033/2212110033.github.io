@@ -1,0 +1,192 @@
+
+body {
+  background-color: #e0ffff;
+  font-weight: normal;
+}
+
+mozi{
+  background-color: yellow;
+}
+
+.box {
+  background-color: #e6ffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 15px 0;        
+  width: 20%;            
+}
+
+
+textarea,
+input[type="text"] {
+  width: 100%;           
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 6px 8px;
+  border: 1.5px solid #999;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+
+textarea {
+  height: 60px;
+  resize: none;
+}
+
+
+textarea:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: #1e90ff;
+  box-shadow: 0 0 4px #87cefa;
+}
+
+
+.toggle button {
+  background-color: #f0f0f0;
+  border: 1px solid #888;
+  padding: 5px 10px;
+  margin: 3px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.toggle button.active {
+  background-color: #87cefa;
+  color: #fff;
+  border-color: #1e90ff;
+}
+
+
+.inline-question {
+  display: flex;               
+  align-items: center;         
+  gap: 8px;                   
+  margin-bottom: 10px;    
+}
+
+.inline-question label {
+  flex: 1;                     
+  font-weight: normal;
+}
+
+.inline-question input[type="text"] {
+  width: 10%;                  
+  min-width: 80px;             
+}
+
+
+.learning-page {
+  display: flex;
+  justify-content: center;   
+  font-weight: bold;         
+  font-size: 18px;           
+  line-height: 1.8;          
+}
+
+
+.learning-page > div {
+  width: 70%;                
+  text-align: left;          
+  margin: 20px auto;         
+}
+
+
+.learning-page p,
+.learning-page img,
+.learning-page a,
+.learning-page button,
+.learning-page input,
+.learning-page select {
+  margin: 8px 0;
+  display: block;
+}
+
+
+.next {
+  display: flex;                
+  justify-content: center;      
+  gap: 40px;                    
+  margin-top: 20px;
+}
+
+.next a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 8px 20px;
+  background-color: #87cefa;
+  color: white;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.next a:hover {
+  background-color: #1e90ff;
+}
+
+
+.textOfFree {
+  font-size: 24px;      
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+.textOfCat {
+  font-size: 17px;     
+  font-weight: bold;
+  line-height: 1.9;    
+}
+
+
+#answer1 {
+  width: 20%;            
+  min-width: 80px;        
+  text-align: center;     
+}
+
+#decryptInput {
+  width: 20%;            
+  min-width: 80px;        
+  text-align: center;     
+}
+
+
+.quiz-input {
+  width: 20% !important;       
+  min-width: 80px;
+  text-align: center;
+  padding: 4px 6px;
+}
+
+
+.question-box {
+  display: flex;                
+  align-items: center;          
+  gap: 8px;                    
+  justify-content: flex-start;  
+
+.question-box p {
+  flex-basis: 100%;             
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.quiz-input {
+  width: 10% !important;        
+  min-width: 80px;
+  text-align: center;
+  padding: 4px 6px;
+}
+
+.question-box button {
+  padding: 4px 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+}
