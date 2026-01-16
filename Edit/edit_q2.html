@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2問 編集</title>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .edit-layout {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .editor-card {
+      border: 1px solid #ccc;
+      border-radius: 14px;
+      padding: 30px 20px;
+      background: #f8f8f8;
+      text-align: center;
+      width: 360px;
+    }
+    .editor-card h3 { margin-bottom: 18px; }
+
+    .editor-card label {
+      font-weight: bold;
+      display: block;
+      margin: 12px 0 6px;
+    }
+
+    .editor-card input[type="text"],
+    .editor-card input[type="number"],
+    .editor-card select {
+      width: 80%;
+      padding: 10px;
+      margin: 0 auto 8px;
+      display: block;
+      text-align: center;
+      border-radius: 10px;
+      border: 2px solid #aaa;
+      background: #fff;
+    }
+
+    .next a, .next button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      margin: 5px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .next a:hover, .next button:hover { background: #0056b3; }
+
+    .editor-info {
+      width: 520px;
+      max-width: 92vw;
+      background: #ffffffdd;
+      padding: 20px 25px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      line-height: 1.8;
+    }
+    .editor-info h3 { margin: 12px 0 8px; }
+
+    .example-box {
+      margin-top: 12px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #eaffff;
+      border: 3px solid #000;
+    }
+
+    .mock-quiz { text-align: left; }
+    .mock-title {
+      font-size: 28px;
+      font-weight: 900;
+      margin: 0 0 18px;
+    }
+
+    .mock-question {
+      font-size: 34px;
+      font-weight: 900;
+      margin: 0 0 34px;
+      word-break: break-word;
+    }
+
+    .mock-hint {
+      margin-left: 10px;
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .mock-input {
+      width: 420px;
+      max-width: 100%;
+      padding: 16px 18px;
+      border: 3px solid #999;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 18px;
+      display: block;
+    }
+    .mock-input:disabled { color: #666; }
+
+    .small-note {
+      font-size: 14px;
+      color: #444;
+      margin-top: 10px;
+    }
+    
+    .editor-card input[type="text"],
+    .editor-card input[type="number"],
+    .editor-card select {
+      width: 80%;
+      box-sizing: border-box;
+      padding: 12px;
+      margin: 0 auto 12px;
+      display: block;
+      text-align: center;
+      
+      border: 3px solid #aaa;
+      border-radius: 14px;
+      background: #fff;
+      font-size: 20px;
+    }
+    
+    .editor-card input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    
+    .editor-card input[type="number"]::-webkit-inner-spin-button,
+    .editor-card input[type="number"]::-webkit-outer-spin-button {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="learning-page">
+    <div class="text">
+      <h2>第2問の編集</h2>
+
+      <div class="edit-layout">
+
+        <div class="editor-card">
+          <h3>第2問（caesar_2.html）</h3>
+
+          <label for="edit2">第2問の答え（平文）</label>
+          <input type="text" id="edit2" placeholder="英語で入力">
+
+          <label for="shift2">シフト数</label>
+          <input type="number" id="shift2" min="1" max="25" value="3">
+
+          <label for="dir2">方向</label>
+          <select id="dir2">
+            <option value="1">右(+)</option>
+            <option value="-1">左(-)</option>
+          </select>
+
+          <div class="next" style="margin-top: 14px;">
+            <button type="button" onclick="saveQ2()">保存</button>
+            <a href="quiz_edit_menu.html">メニューに戻る</a>
+          </div>
+        </div>
+
+        <div class="editor-info">
+          <h3>この問題の説明</h3>
+          <p>
+            第2問はシーザー暗号です。左で設定した「答え（平文）」を、指定したシフト数・方向で暗号化した文字列を出題画面に表示し、生徒が復号して答えを入力します。
+          </p>
+
+          <h3>実際の出題画面イメージ</h3>
+          <div class="example-box">
+            <div class="mock-quiz">
+              <p class="mock-title">問題はこちらです。</p>
+
+              <!-- ここが暗号文に置き換わる -->
+              <p class="mock-question">
+                <span id="mockCipher">xxx</span>
+                <span class="mock-hint">(CTF<span id="mockDir">+</span><span id="mockShift">3</span>)</span>
+              </p>
+
+              <input class="mock-input" type="text" placeholder="復号した答えを入力" disabled>
+              <p class="small-note">※これは表示例（プレビュー）です。送信ボタンは省略しています。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function caesarEncode(text, shift) {
+      return (text || "").replace(/[a-z]/g, c =>
+        String.fromCharCode((c.charCodeAt(0) - 97 + shift + 26) % 26 + 97)
+      );
+    }
+
+    function updatePreview() {
+      const plain = (document.getElementById("edit2").value || "").toLowerCase();
+      const shift = parseInt(document.getElementById("shift2").value || "3", 10);
+      const dir = parseInt(document.getElementById("dir2").value || "1", 10);
+
+      const effectiveShift = shift * dir;
+      const cipher = plain ? caesarEncode(plain, effectiveShift) : "xxx";
+
+      document.getElementById("mockCipher").textContent = cipher;
+      document.getElementById("mockShift").textContent = shift;
+      document.getElementById("mockDir").textContent = (dir === 1 ? "+" : "-");
+    }
+
+    function saveQ2() {
+      const plain = (document.getElementById("edit2").value || "").toLowerCase();
+      const shift = parseInt(document.getElementById("shift2").value || "3", 10);
+      const dir = parseInt(document.getElementById("dir2").value || "1", 10);
+
+      const encrypted = plain ? caesarEncode(plain, shift * dir) : "";
+
+      localStorage.setItem("a2_plain", plain);
+      localStorage.setItem("a2_shift", String(shift));
+      localStorage.setItem("a2_direction", String(dir));
+      localStorage.setItem("a2_encrypted", encrypted);
+
+      updatePreview();
+      alert("第2問を保存しました！");
+    }
+
+    (function init() {
+      const plain = localStorage.getItem("a2_plain");
+      const shift = localStorage.getItem("a2_shift");
+      const dir = localStorage.getItem("a2_direction");
+
+      if (plain !== null) document.getElementById("edit2").value = plain;
+      if (shift !== null) document.getElementById("shift2").value = shift;
+      if (dir !== null) document.getElementById("dir2").value = dir;
+
+      document.getElementById("edit2").addEventListener("input", updatePreview);
+      document.getElementById("shift2").addEventListener("input", updatePreview);
+      document.getElementById("dir2").addEventListener("change", updatePreview);
+
+      updatePreview();
+    })();
+  </script>
+</body>
+</html>
