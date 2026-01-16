@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>第1問 編集</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tab.css">
+
+  <style>
+    .edit-layout {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .editor-card {
+      border: 1px solid #ccc;
+      border-radius: 14px;
+      padding: 30px 20px;
+      background: #f8f8f8;
+      text-align: center;
+      width: 340px;
+    }
+
+    .editor-card h3 {
+      margin-bottom: 20px;
+    }
+
+    .editor-card label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .editor-card input[type="text"] {
+      width: 80%;
+      padding: 8px;
+      margin: 8px auto;
+      display: block;
+      text-align: center;
+    }
+
+    .next a, .next button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 5px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .next a:hover, .next button:hover {
+      background: #0056b3;
+    }
+
+    .editor-info {
+      width: 500px;
+      background: #ffffffdd;
+      padding: 20px 25px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      line-height: 1.7;
+    }
+
+    .editor-info h3 {
+      margin-bottom: 10px;
+    }
+
+    .example-box {
+      margin-top: 15px;
+      padding: 12px;
+      border: 3px solid #000;
+      background: #eaffff;
+      border-radius: 6px;
+    }
+
+    .code-preview {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      overflow-x: auto;
+      white-space: pre;
+      border: 1px solid #444;
+      margin-top: 8px;
+    }
+    
+    .hl-tag{ color:#569cd6; }
+    .hl-attr{ color:#9cdcfe; }
+    .hl-str{ color:#ce9178; }
+    .hl-com{ color:#6a9955; }
+  </style>
+</head>
+
+<body>
+  <div class="learning-page">
+    <div class="text">
+      <h2>第1問の編集</h2>
+
+      <div class="edit-layout">
+
+        <div class="editor-card">
+          <h3>第1問（sourceCode_2.html）</h3>
+
+          <label>第1問の答え</label>
+          <input type="text" id="edit1" placeholder="英語で入力">
+
+          <div class="next">
+            <button type="button" onclick="saveQ1()">保存</button>
+            <a href="quiz_edit_menu.html">メニューに戻る</a>
+          </div>
+        </div>
+
+        <div class="editor-info">
+          <h3>この問題の説明</h3>
+          <p>
+            ページのソースコードの中に「Key: ○○○」という記述を<br>
+            埋め込んでおき、その○○○の部分を答えさせる問題です。
+          </p>
+
+          <h3>実際の出題画面イメージ</h3>
+          <div class="example-box">
+            <p>▼ HTML ソースの一部</p>
+
+            <pre class="code-preview">
+              <span class="tok-tag">div <span class="tok-attr">class</span><span class="tok">=</span><span class="tok-str">"key"</span></span>
+                  <span class="tok-tag">p</span><span class="tok">Key:<span class="tok"><span id="codeKey">xxx</span></span></span><span class="tok-tag">/p</span>
+              <span class="tok-tag">/div</span>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updatePreview() {
+      const val = document.getElementById("edit1").value || "xxx";
+      document.getElementById("codeKey").textContent = val;
+    }
+
+    function saveQ1() {
+      const a1 = document.getElementById("edit1").value;
+      localStorage.setItem("a1", a1);
+      updatePreview();
+      alert("第1問を保存しました！");
+    }
+
+    (function init() {
+      const a1 = localStorage.getItem("a1");
+      if (a1 !== null) {
+        document.getElementById("edit1").value = a1;
+      }
+      updatePreview();
+
+      document.getElementById("edit1").addEventListener("input", updatePreview);
+    })();
+  </script>
+</body>
+</html>
