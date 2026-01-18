@@ -2,8 +2,6 @@ const API = "https://quiz-answer-api.2212110033v.workers.dev";
 
 function detectCode() {
   const parts = location.pathname.split("/").filter(Boolean);
-  const folder = parts[parts.indexOf("No.1") >= 0 ? parts.indexOf("No.1") : -1];
-  
   const noFolder = parts.find(p => /^No\.\d+$/.test(p));
   if (noFolder) return noFolder.replace("No.", "NO");
   return "NO1";
@@ -20,12 +18,14 @@ async function cloudPull() {
   try {
     const r = await fetch(`${API}?code=${encodeURIComponent(CODE)}`, { cache: "no-store" });
     const d = await r.json();
+
     for (const k of KEYS) {
       if (typeof d[k] === "string") localStorage.setItem(k, d[k]);
     }
-    
+
     const a1El = document.getElementById("a1");
     if (a1El) a1El.textContent = localStorage.getItem("a1") || "xxx";
+
   } catch (e) {
     console.warn("cloud pull failed", e);
   }
