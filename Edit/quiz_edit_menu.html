@@ -184,7 +184,6 @@
 
   <script>
     const API = "https://quiz-answer-api.2212110033v.workers.dev";
-    
     const CODE = "NO1";
     
     const KEYS = [
@@ -204,22 +203,31 @@
           }
         }
         
-        const a1El = document.getElementById("a1");
-        if (a1El) {
-          a1El.textContent = localStorage.getItem("a1") || "xxx";
-        }
+        alert("クラウドから読み込みました（編集内容を上書きします）");
       
       } catch (e) {
         console.warn("cloud pull failed", e);
+        alert("クラウド読込に失敗しました");
       }
     }
     
-    autoPull();
+    async function cloudSave() {
+      const payload = {};
+      for (const k of KEYS) payload[k] = localStorage.getItem(k) || "";
+      
+      await fetch(`${API}?code=${CODE}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      
+      alert("クラウドに保存しました");
+    }
   </script>
   
-  <div style="text-align:center; margin: 20px 0;">
-    <button onclick="cloudSave()" style="padding:10px 16px; font-weight:700;">クラウド保存</button>
-    <button onclick="cloudLoad()" style="padding:10px 16px; font-weight:700; margin-left:10px;">クラウド読込</button>
+  <div style="text-align:center; margin:20px 0;">
+    <button onclick="cloudSave()">クラウド保存</button>
+    <button onclick="autoPull()">クラウド読込</button>
   </div>
 
 
