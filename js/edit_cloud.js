@@ -12,7 +12,7 @@ async function cloudLoad() {
   const r = await fetch(`${API}?code=${encodeURIComponent(CODE)}`, { cache: "no-store" });
   const d = await r.json();
   for (const k of KEYS) if (typeof d[k] === "string") localStorage.setItem(k, d[k]);
-  alert(`クラウド読込OK（${CODE}）※編集内容は上書きされる`);
+  alert(`クラウド読込OK`);
 }
 
 async function cloudSave() {
@@ -23,7 +23,7 @@ async function cloudSave() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
-  alert(`クラウド保存OK（${CODE}）`);
+  alert(`クラウド保存OK`);
 }
 
 // HTMLから呼べるように
