@@ -92,48 +92,6 @@
   </style>
 </head>
 
-<script>
-  const API = "https://quiz-answer-api.2212110033v.workers.dev";
-
-  const params = new URLSearchParams(location.search);
-  const CODE = params.get("code") || "NO1";
-
-  const KEYS = [
-    "a1",
-    "a2_plain", "a2_shift", "a2_direction", "a2_encrypted",
-    "a3",
-    "quiz_image", "quiz_image_name", "quiz_image_type", "quiz_image_size",
-  ];
-
-  async function cloudLoad() {
-    const r = await fetch(`${API}?code=${encodeURIComponent(CODE)}`);
-    const d = await r.json();
-
-    for (const k of KEYS) {
-      if (typeof d[k] === "string") localStorage.setItem(k, d[k]);
-    }
-    alert(`クラウドから読み込みOK（code=${CODE}）\n必要なら教材ページを再読み込みしてね`);
-  }
-
-  async function cloudSave() {
-    const payload = {};
-    for (const k of KEYS) payload[k] = localStorage.getItem(k) || "";
-
-    const r = await fetch(`${API}?code=${encodeURIComponent(CODE)}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    const res = await r.json();
-    alert(`クラウド保存OK（code=${CODE}）\n${JSON.stringify(res)}`);
-  }
-</script>
-
-<div style="text-align:center; margin: 20px 0;">
-  <button onclick="cloudSave()" style="padding:10px 16px; font-weight:700;">クラウド保存</button>
-  <button onclick="cloudLoad()" style="padding:10px 16px; font-weight:700; margin-left:10px;">クラウド読込</button>
-</div>
-
 <body>
   <div class="learning-page">
     <div class="text">
@@ -223,6 +181,50 @@
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    const API = "https://quiz-answer-api.2212110033v.workers.dev";
+    
+    const params = new URLSearchParams(location.search);
+    const CODE = params.get("code") || "NO1";
+    
+    const KEYS = [
+      "a1",
+      "a2_plain", "a2_shift", "a2_direction", "a2_encrypted",
+      "a3",
+      "quiz_image", "quiz_image_name", "quiz_image_type", "quiz_image_size",
+    ];
+    
+    async function cloudLoad() {
+      const r = await fetch(`${API}?code=${encodeURIComponent(CODE)}`);
+      const d = await r.json();
+      
+      for (const k of KEYS) {
+        if (typeof d[k] === "string") localStorage.setItem(k, d[k]);
+      }
+      
+      alert(`クラウドから読み込みOK（code=${CODE}）\n必要なら教材ページを再読み込みしてね`);
+    }
+    
+    async function cloudSave() {
+      const payload = {};
+      for (const k of KEYS) payload[k] = localStorage.getItem(k) || "";
+      
+      const r = await fetch(`${API}?code=${encodeURIComponent(CODE)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const res = await r.json();
+      alert(`クラウド保存OK（code=${CODE}）\n${JSON.stringify(res)}`);
+    }
+  </script>
+  
+  <div style="text-align:center; margin: 20px 0;">
+    <button onclick="cloudSave()" style="padding:10px 16px; font-weight:700;">クラウド保存</button>
+    <button onclick="cloudLoad()" style="padding:10px 16px; font-weight:700; margin-left:10px;">クラウド読込</button>
+  </div>
+
 
 </body>
 </html>
