@@ -52,9 +52,8 @@
 
   <script>
     const API = "https://quiz-answer-api.2212110033v.workers.dev";
-    
-    const params = new URLSearchParams(location.search);
-    const CODE = params.get("code") || "NO1";
+
+    const CODE = "NO1";
     
     const KEYS = [
       "a1",
@@ -64,14 +63,21 @@
     
     async function autoPull() {
       try {
-        const r = await fetch(`${API}?code=${encodeURIComponent(CODE)}`, { cache: "no-store" });
+        const r = await fetch(`${API}?code=${CODE}`, { cache: "no-store" });
         const d = await r.json();
+        
         for (const k of KEYS) {
-          if (typeof d[k] === "string") localStorage.setItem(k, d[k]);
+          if (typeof d[k] === "string") {
+            localStorage.setItem(k, d[k]);
+          }
         }
-        console.log("Cloud pulled:", CODE);
+        
+        const a1El = document.getElementById("a1");
+        if (a1El) {
+          a1El.textContent = localStorage.getItem("a1") || "xxx";
+        }
       } catch (e) {
-        console.warn("Cloud pull failed:", e);
+        console.warn("cloud pull failed", e);
       }
     }
     
